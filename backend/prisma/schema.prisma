@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int     @id @default(autoincrement())
+  username       String
+  email          String  @unique
+  password       String
+  address        String?
+  phone          String?
+  profilePicture String?
+  createdAt      DateTime @default(now())
+  transactions Transaction[] 
+}
+
+model Product {
+  id         Int    @id @default(autoincrement())
+  name       String
+  category   Category
+  photo      String?
+  available  Boolean @default(true)
+  discount   Float?  @default(0.0)
+  createdAt  DateTime @default(now())
+  transactions Transaction[] 
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  productId   Int
+  status      TransactionStatus @default(PENDING)
+  totalAmount Float
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+enum Category {
+  laptop
+  Phones
+  tablets
+  Gamings
+  smarthome
+  accessories
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
