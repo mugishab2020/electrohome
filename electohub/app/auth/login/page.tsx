@@ -6,6 +6,7 @@ import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import axiosInstance from '@/app/utils/axiosInstance';
+import { ToastContainer, toast } from "react-toastify";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -18,15 +19,20 @@ const LoginPage: React.FC = () => {
     setError('');
     try {
       const response = await axiosInstance.post('/users/login', {email, password});
+      console.log("Login response: ", response);  
       console.log(response);
       if (response.status === 200)  {
         localStorage.setItem('token', response.data.token);
-        router.push('/');
-      } else {
-        setError('Invalid email or password');
+        toast.success("Login successful!");
+        setTimeout(() => {
+          router.push("/");
+        }, 1500);
+      } 
+      if (response.status === 400){
+        toast.error("Invalid email or password");
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      toast.error('Invalid email or password');
     }
   };
 
@@ -35,6 +41,7 @@ const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen ">
       <Navbar />
+      <ToastContainer />
       <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>

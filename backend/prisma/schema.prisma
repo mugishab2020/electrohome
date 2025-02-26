@@ -43,12 +43,12 @@ model Transaction {
 }
 
 enum Category {
-  laptop
-  Phones
-  tablets
-  Gamings
-  smarthome
-  accessories
+  Laptop
+  Phone
+  Tablet
+  Gaming
+  Smarthome
+  Accessories
 }
 
 enum TransactionStatus {

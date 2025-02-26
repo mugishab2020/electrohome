@@ -8,6 +8,8 @@ import { FiUser, FiMail, FiLock, FiPhone, FiMapPin, FiUserPlus } from 'react-ico
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 import axiosInstance from '../../../app/utils/axiosInstance';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignupPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -36,19 +38,22 @@ const SignupPage: React.FC = () => {
     try {
       const response = await axiosInstance.post('/users/register', formData);
       console.log(response.status);
-      if (response.status == 201) {
+      if (response.status == 201) {toast.success("Registration successful! Redirecting to login...");
+      setTimeout(() => {
         router.push('/auth/login');
+      }, 1500);
       } else {
-        setError('Signup failed. Please try again.');
+      toast.error("Signup failed. Please try again.");
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+    toast.error("Signup failed. Please try again.");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
+      <ToastContainer />
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>

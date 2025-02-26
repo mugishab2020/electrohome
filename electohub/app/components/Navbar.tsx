@@ -5,30 +5,36 @@ import Link from "next/link";
 import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiX, FiHome, FiGrid, FiTag, FiSettings, FiLogOut, FiLogIn } from "react-icons/fi";
 import { useRouter } from "next/navigation";  
 
+
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
+    // Check if window is defined to ensure we're in the browser
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
     }
-    }, [token]);
+  }, []);
 
-  const login = () =>{
+  const login = () => {
     router.push('/auth/login');
-     setIsLoggedIn(true);
+    setIsLoggedIn(true);
+  };
 
-  }
-  
   const logout = () => {
-    localStorage.removeItem('token');
+    if (typeof window !== "undefined") {
+      localStorage.removeItem('token');
+    }
     router.push('/auth/login');
     setIsLoggedIn(false);
   };
+
   return { isLoggedIn, login, logout };
 };
 

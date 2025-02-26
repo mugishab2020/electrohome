@@ -15,12 +15,10 @@ const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    // In a real application, you would fetch the cart items from an API or local storage
-    // For this example, we'll use some mock data
     const mockCartItems: CartItem[] = [
       { id: 1, name: "Smartphone X", price: 699, quantity: 1, image: "/images/smartphone.jpg" },
       { id: 2, name: "Laptop Pro", price: 1299, quantity: 1, image: "/images/laptop.jpg" },
-      // Add more items as needed
+   
     ];
     setCartItems(mockCartItems);
   }, []);

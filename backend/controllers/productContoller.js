@@ -40,6 +40,7 @@ exports.createProduct = async (req, res) => {
 
 exports.getProductsByCategory = async (req, res) => {
   const { category } = req.params;
+  console.log(category);
 
   try {
     const products = await prisma.product.findMany({
@@ -47,13 +48,6 @@ exports.getProductsByCategory = async (req, res) => {
         category: category,
       },
     });
-
-    if (products.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No products found in this category" });
-    }
-
     res.status(200).json(products);
   } catch (error) {
     console.error(error);

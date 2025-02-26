@@ -153,7 +153,7 @@ const ElectoHub: React.FC = () => {
                 Experience tomorrow's innovation today with our cutting-edge
                 electronic devices.
               </p>
-              <button className="bg-[#7F68DC] text-white px-8 py-3 rounded-full hover:bg-blue-700 hover:text-blue-200 transition duration-300">
+              <button className="bg-[#6977b1] text-white px-8 py-3 rounded-full hover:bg-blue-700 hover:text-blue-200 transition duration-300">
                 Shop Now
               </button>
             </div>
